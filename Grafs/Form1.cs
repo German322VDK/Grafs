@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Grafs
@@ -24,6 +25,7 @@ namespace Grafs
 
         private const int N = 10;
         private const string ser2 = "C# Rand";
+
 
         //функция выбора метода
         public int RadButton()
@@ -61,15 +63,20 @@ namespace Grafs
                 //вычесляем ran
                 ran[i] = rand.NextDouble();
             }
-
-            //отрисовка графиков
-            for(int i = 0; i < count; i++)
+            using (StreamWriter file1 = new StreamWriter("MiddleSqure.txt"))
             {
-                r[i] = Math.Round(r[i], 3);
-                ran[i] = Math.Round(ran[i], 3);
+                file1.WriteLine($"i  r[i]    a[i]    N=10    count={count}   bitness={bitness}");
+                //отрисовка графиков
+                for (int i = 0; i < count; i++)
+                {
+                    r[i] = Math.Round(r[i], 3);
+                    ran[i] = Math.Round(ran[i], 3);
 
-                chart1.Series["Series1"].Points.AddXY(i, r[i]);
-                chart1.Series["Series2"].Points.AddXY(i, ran[i]);
+                    chart1.Series["Series1"].Points.AddXY(i, r[i]);
+                    chart1.Series["Series2"].Points.AddXY(i, ran[i]);
+
+                    file1.WriteLine(i + "   " + r[i] + "    " + a[i]);
+                }
             }
         }
 
@@ -101,14 +108,20 @@ namespace Grafs
                 //вычесляем ran
                 ran[i] = rand.NextDouble();
             }
-            //отрисовка графиков
-            for (int i = 0; i < count; i++)
+            using (StreamWriter file2 = new StreamWriter("MiddleMultyPly.txt"))
             {
-                r[i] = Math.Round(r[i], 3);
-                ran[i] = Math.Round(ran[i], 3);
+                file2.WriteLine($"i  r[i]    a[i]    N=10    count={count}   bitness={bitness}");
+                //отрисовка графиков
+                for (int i = 0; i < count; i++)
+                {
+                    r[i] = Math.Round(r[i], 3);
+                    ran[i] = Math.Round(ran[i], 3);
 
-                chart1.Series["Series1"].Points.AddXY(i, r[i]);
-                chart1.Series["Series2"].Points.AddXY(i, ran[i]);
+                    chart1.Series["Series1"].Points.AddXY(i, r[i]);
+                    chart1.Series["Series2"].Points.AddXY(i, ran[i]);
+
+                    file2.WriteLine(i + "   " + r[i] + "    " + a[i]);
+                }
             }
         }
 
@@ -142,14 +155,20 @@ namespace Grafs
                 //вычесляем ran
                 ran[i] = rand.NextDouble();
             }
-            //отрисовка графиков
-            for (int i = 0; i < count; i++)
+            using (StreamWriter file3 = new StreamWriter("MethMixing.txt"))
             {
-                r[i] = Math.Round(r[i], 3);
-                ran[i] = Math.Round(ran[i], 3);
+                file3.WriteLine($"i  r[i]    a[i]    N=10    count={count}   bitness={bitness}");
+                //отрисовка графиков
+                for (int i = 0; i < count; i++)
+                {
+                    r[i] = Math.Round(r[i], 3);
+                    ran[i] = Math.Round(ran[i], 3);
 
-                chart1.Series["Series1"].Points.AddXY(i, r[i]);
-                chart1.Series["Series2"].Points.AddXY(i, ran[i]);
+                    chart1.Series["Series1"].Points.AddXY(i, r[i]);
+                    chart1.Series["Series2"].Points.AddXY(i, ran[i]);
+
+                    file3.WriteLine(i + "   " + r[i] + "    " + a[i]);
+                }
             }
         }
 
@@ -157,7 +176,7 @@ namespace Grafs
         public void LineKon()
         {
             //подписываем график
-            chart1.Series["Series1"].LegendText = "line core";
+            chart1.Series["Series1"].LegendText = "line con";
             chart1.Series["Series2"].LegendText = "";
 
             b = 0.21131 * M;
@@ -167,10 +186,17 @@ namespace Grafs
                 r[i] = (int)( ( A * r[i-1] + b) % M);
             }
 
-                //отрисовка графика
-            for (int i = 0; i < count; i++)
+            using (StreamWriter file4 = new StreamWriter("LineKon.txt"))
             {
-                chart1.Series["Series1"].Points.AddXY(i, r[i]);
+                file4.WriteLine($"i  r[i]    N=10    count={count}   a={A}" +
+                    $"  b={b}   M={M}");
+                //отрисовка графика
+                for (int i = 0; i < count; i++)
+                {
+                    chart1.Series["Series1"].Points.AddXY(i, r[i]);
+
+                    file4.WriteLine(i + "   " + r[i]);
+                }
             }
         }
 
@@ -263,6 +289,8 @@ namespace Grafs
 
         public Form1()
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+
             InitializeComponent();
         }
 
