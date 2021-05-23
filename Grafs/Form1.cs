@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Grafs
@@ -506,11 +508,176 @@ namespace Grafs
             }
         }
 
+        #region Игра
+
+        int userpoints = 0, comppoints = 0, usernam, compnam;
+
+        private int[] Mix()
+        {
+            int bt = 10000;
+            int bit = 4;
+            long[] a1 = new long[3];
+            long[] a2 = new long[3];
+            long mx1 = (long)Math.Pow(N, (3 * bit) / 4);
+            long mx2 = (long)Math.Pow(N, bit / 4);
+
+            double[] trr = new double[3];
+            int[] Tr = new int[3];
+            long[] s = new long[3];
+
+            int max = DateTime.MaxValue.Millisecond, cur = DateTime.Now.Millisecond;
+
+            if (cur < 100)
+                cur *= 10;
+
+            s[0] = (long)( ( (double)max / cur) * ( bt / 10) );
+            if (s[0] < 1000)
+                s[0] *= 10;
+            trr[0] = (double)s[0] / bt;
+
+            for (int i = 1; i < Tr.Length; i++)
+            {
+                a1[i] = (s[i - 1] % mx1) * mx2 + (s[i - 1] / mx1); //сдвиг влево
+                a2[i] = (s[i - 1] % mx2) * mx1 + (s[i - 1] / mx2); //сдвиг вправо
+                //отбрасываем первые числа
+                s[i] = (long)((a1[i] + a2[i]) % bt);
+                if (s[i] < 1000) 
+                    s[i] *= 10;
+                //отбрасываем последние числа, вычесляем r
+                trr[i] = (double)s[i] / bt;
+
+            }
+
+            for(int i = 0; i < Tr.Length; i++)
+            {
+                Tr[i] = Convert.ToInt32(trr[i] * 6);
+                if (Tr[i] == 0)
+                    Tr[i]++;
+            }
+
+            return Tr;
+        }
+
+        private async void button5_Click(object sender, EventArgs e)
+        {
+            if (userpoints >= 20 || comppoints >= 20)
+            {
+                MessageBox.Show("Начните игру заново!!!", "Ошибка");
+                return;
+            }
+
+            Random r = new Random();
+            int pu = 0, pc = 0;
+            try
+            {
+                usernam = Convert.ToInt32(textBox5_1.Text);
+
+                if (usernam < 1 || usernam > 6)
+                    throw new ArgumentException("Должно быть от 1 до 6");
+
+
+                textBox5_7.Text = "ошибки не найдены";
+
+                
+            }
+            catch (Exception er)
+            {
+                textBox5_7.Text = er.Message;
+                return;
+            }
+
+            int[] Tru = Mix();
+
+            foreach (var item in Tru)
+            {
+                if (item == usernam)
+                {
+                    userpoints++;
+                    pu++;
+                }
+            }
+
+            textBox5_1_1.Text = Tru[0].ToString() + " " + Tru[1].ToString() 
+                + " " + Tru[2].ToString();
+
+            textBox5_2.Text = userpoints.ToString();
+            textBox5_3.Text = $"Вам выпало ваше \n число {pu} раз";
+
+            await Task.Delay(200);
+
+            compnam = r.Next(1, 7);
+
+            textBox5_4.Text = compnam.ToString();
+
+            int[] Trc = Mix();
+
+            foreach (var item in Trc)
+            {
+                if (item == compnam)
+                {
+                    comppoints++;
+                    pc++;
+                }
+            }
+
+            textBox5_2_1.Text = Trc[0].ToString() + " " + Trc[1].ToString()
+                + " " + Trc[2].ToString();
+
+            textBox5_5.Text = comppoints.ToString();
+
+            textBox5_6.Text = $"Компьютеру выпало \n его число  {pc} раз";
+
+            if (userpoints >= 20 && comppoints < 20)
+            {
+                textBox5_8.Text = "Игрок";
+                MessageBox.Show("Вы ПОБЕДИЛИ!!!", "Победа");
+            }
+                
+            else if (userpoints < 20 && comppoints >= 20)
+            {
+                textBox5_8.Text = "Компьютер";
+                MessageBox.Show("Вы проиграли(", "Поражение");
+            }
+                
+            else if(userpoints >= 20 && comppoints >= 20)
+            {
+                textBox5_8.Text = "Ничья";
+                MessageBox.Show("Ничья|", "Ничья");
+            }
+                
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Игрок загадывает число, бросаются 3 кости \n " +
+                "Если число выпало 1 раз += 1 очко, 2 раза => 2 и тд. Играем до 20 очков",
+                "Подсказка");
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            userpoints = 0; 
+            comppoints = 0;
+
+            textBox5_1.Text = "";
+            textBox5_2.Text = "";
+            textBox5_3.Text = "";
+            textBox5_4.Text = "";
+            textBox5_5.Text = "";
+            textBox5_6.Text = "";
+            textBox5_7.Text = "";
+            textBox5_8.Text = "";
+            textBox5_2_1.Text = "";
+            textBox5_1_1.Text = "";
+        }
+
+        #endregion
         public Form1()
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
 
             InitializeComponent();
+
         }
 
     }

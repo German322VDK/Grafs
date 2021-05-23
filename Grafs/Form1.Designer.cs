@@ -1,4 +1,6 @@
 ﻿
+using System.Threading.Tasks;
+
 namespace Grafs
 {
     partial class Form1
@@ -29,21 +31,22 @@ namespace Grafs
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series13 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.textBox1_1 = new System.Windows.Forms.TextBox();
@@ -89,21 +92,46 @@ namespace Grafs
             this.button3 = new System.Windows.Forms.Button();
             this.chart3 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.textBox4_1 = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.chart4 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.label19 = new System.Windows.Forms.Label();
-            this.textBox4_5 = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.textBox4_2 = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.textBox4_3 = new System.Windows.Forms.TextBox();
             this.textBox4_6 = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.textBox4_4 = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.textBox4_3 = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.textBox4_2 = new System.Windows.Forms.TextBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
+            this.textBox4_5 = new System.Windows.Forms.TextBox();
+            this.textBox4_1 = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.chart4 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.button7 = new System.Windows.Forms.Button();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.textBox5_6 = new System.Windows.Forms.TextBox();
+            this.textBox5_3 = new System.Windows.Forms.TextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.textBox5_5 = new System.Windows.Forms.TextBox();
+            this.textBox5_2 = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.textBox5_8 = new System.Windows.Forms.TextBox();
+            this.textBox5_4 = new System.Windows.Forms.TextBox();
+            this.textBox5_7 = new System.Windows.Forms.TextBox();
+            this.textBox5_1 = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.textBox5_1_1 = new System.Windows.Forms.TextBox();
+            this.textBox5_2_1 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
@@ -113,6 +141,8 @@ namespace Grafs
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart4)).BeginInit();
+            this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -247,26 +277,26 @@ namespace Grafs
             // 
             // chart1
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chart1.Legends.Add(legend6);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(16, 22);
             this.chart1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chart1.Name = "chart1";
-            series9.ChartArea = "ChartArea1";
-            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            series9.LabelForeColor = System.Drawing.SystemColors.Highlight;
-            series9.Legend = "Legend1";
-            series9.Name = "Series1";
-            series10.ChartArea = "ChartArea1";
-            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series10.LabelForeColor = System.Drawing.Color.Orange;
-            series10.Legend = "Legend1";
-            series10.Name = "Series2";
-            this.chart1.Series.Add(series9);
-            this.chart1.Series.Add(series10);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            series1.LabelForeColor = System.Drawing.SystemColors.Highlight;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series2.LabelForeColor = System.Drawing.Color.Orange;
+            series2.Legend = "Legend1";
+            series2.Name = "Series2";
+            this.chart1.Series.Add(series1);
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(563, 319);
             this.chart1.TabIndex = 21;
             this.chart1.Text = "chart1";
@@ -427,26 +457,26 @@ namespace Grafs
             // 
             // chart2
             // 
-            chartArea7.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea7);
-            legend7.Name = "Legend1";
-            this.chart2.Legends.Add(legend7);
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart2.Legends.Add(legend2);
             this.chart2.Location = new System.Drawing.Point(6, 17);
             this.chart2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chart2.Name = "chart2";
-            series11.ChartArea = "ChartArea1";
-            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            series11.LabelForeColor = System.Drawing.SystemColors.Highlight;
-            series11.Legend = "Legend1";
-            series11.Name = "Series1";
-            series12.ChartArea = "ChartArea1";
-            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series12.LabelForeColor = System.Drawing.Color.Orange;
-            series12.Legend = "Legend1";
-            series12.Name = "Series2";
-            this.chart2.Series.Add(series11);
-            this.chart2.Series.Add(series12);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            series3.LabelForeColor = System.Drawing.SystemColors.Highlight;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series4.LabelForeColor = System.Drawing.Color.Orange;
+            series4.Legend = "Legend1";
+            series4.Name = "Series2";
+            this.chart2.Series.Add(series3);
+            this.chart2.Series.Add(series4);
             this.chart2.Size = new System.Drawing.Size(522, 319);
             this.chart2.TabIndex = 40;
             this.chart2.Text = "chart2";
@@ -570,26 +600,26 @@ namespace Grafs
             // 
             // chart3
             // 
-            chartArea8.Name = "ChartArea1";
-            this.chart3.ChartAreas.Add(chartArea8);
-            legend8.Name = "Legend1";
-            this.chart3.Legends.Add(legend8);
+            chartArea3.Name = "ChartArea1";
+            this.chart3.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart3.Legends.Add(legend3);
             this.chart3.Location = new System.Drawing.Point(27, 28);
             this.chart3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chart3.Name = "chart3";
-            series13.ChartArea = "ChartArea1";
-            series13.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series13.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            series13.LabelForeColor = System.Drawing.SystemColors.Highlight;
-            series13.Legend = "Legend1";
-            series13.Name = "Series1";
-            series14.ChartArea = "ChartArea1";
-            series14.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series14.LabelForeColor = System.Drawing.Color.Orange;
-            series14.Legend = "Legend1";
-            series14.Name = "Series2";
-            this.chart3.Series.Add(series13);
-            this.chart3.Series.Add(series14);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            series5.LabelForeColor = System.Drawing.SystemColors.Highlight;
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series6.LabelForeColor = System.Drawing.Color.Orange;
+            series6.Legend = "Legend1";
+            series6.Name = "Series2";
+            this.chart3.Series.Add(series5);
+            this.chart3.Series.Add(series6);
             this.chart3.Size = new System.Drawing.Size(563, 319);
             this.chart3.TabIndex = 40;
             this.chart3.Text = "chart3";
@@ -617,110 +647,6 @@ namespace Grafs
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "лин-конгр";
             this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // textBox4_1
-            // 
-            this.textBox4_1.Location = new System.Drawing.Point(598, 21);
-            this.textBox4_1.Name = "textBox4_1";
-            this.textBox4_1.Size = new System.Drawing.Size(108, 22);
-            this.textBox4_1.TabIndex = 53;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(723, 21);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(129, 17);
-            this.label18.TabIndex = 52;
-            this.label18.Text = "Количество чисел";
-            // 
-            // chart4
-            // 
-            chartArea5.Name = "ChartArea1";
-            this.chart4.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chart4.Legends.Add(legend5);
-            this.chart4.Location = new System.Drawing.Point(17, 21);
-            this.chart4.Name = "chart4";
-            series8.ChartArea = "ChartArea1";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series8.Legend = "Legend1";
-            series8.Name = "Series1";
-            this.chart4.Series.Add(series8);
-            this.chart4.Size = new System.Drawing.Size(520, 300);
-            this.chart4.TabIndex = 0;
-            this.chart4.Text = "chart4";
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Location = new System.Drawing.Point(4, 25);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1124, 396);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "Игра";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(994, 231);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(96, 17);
-            this.label19.TabIndex = 55;
-            this.label19.Text = "Окно ошибок";
-            // 
-            // textBox4_5
-            // 
-            this.textBox4_5.Enabled = false;
-            this.textBox4_5.Location = new System.Drawing.Point(598, 228);
-            this.textBox4_5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.textBox4_5.Name = "textBox4_5";
-            this.textBox4_5.Size = new System.Drawing.Size(378, 22);
-            this.textBox4_5.TabIndex = 54;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(975, 271);
-            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(115, 50);
-            this.button4.TabIndex = 56;
-            this.button4.Text = "Построить";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // textBox4_2
-            // 
-            this.textBox4_2.Location = new System.Drawing.Point(598, 74);
-            this.textBox4_2.Name = "textBox4_2";
-            this.textBox4_2.Size = new System.Drawing.Size(108, 22);
-            this.textBox4_2.TabIndex = 57;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(723, 74);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(120, 17);
-            this.label20.TabIndex = 58;
-            this.label20.Text = "Верхняя граница";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(994, 77);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(17, 17);
-            this.label21.TabIndex = 60;
-            this.label21.Text = "А";
-            // 
-            // textBox4_3
-            // 
-            this.textBox4_3.Location = new System.Drawing.Point(862, 74);
-            this.textBox4_3.Name = "textBox4_3";
-            this.textBox4_3.Size = new System.Drawing.Size(108, 22);
-            this.textBox4_3.TabIndex = 59;
             // 
             // textBox4_6
             // 
@@ -755,6 +681,358 @@ namespace Grafs
             this.textBox4_4.Size = new System.Drawing.Size(108, 22);
             this.textBox4_4.TabIndex = 61;
             // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(994, 77);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(17, 17);
+            this.label21.TabIndex = 60;
+            this.label21.Text = "А";
+            // 
+            // textBox4_3
+            // 
+            this.textBox4_3.Location = new System.Drawing.Point(862, 74);
+            this.textBox4_3.Name = "textBox4_3";
+            this.textBox4_3.Size = new System.Drawing.Size(108, 22);
+            this.textBox4_3.TabIndex = 59;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(723, 74);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(120, 17);
+            this.label20.TabIndex = 58;
+            this.label20.Text = "Верхняя граница";
+            // 
+            // textBox4_2
+            // 
+            this.textBox4_2.Location = new System.Drawing.Point(598, 74);
+            this.textBox4_2.Name = "textBox4_2";
+            this.textBox4_2.Size = new System.Drawing.Size(108, 22);
+            this.textBox4_2.TabIndex = 57;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(975, 271);
+            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(115, 50);
+            this.button4.TabIndex = 56;
+            this.button4.Text = "Построить";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(994, 231);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(96, 17);
+            this.label19.TabIndex = 55;
+            this.label19.Text = "Окно ошибок";
+            // 
+            // textBox4_5
+            // 
+            this.textBox4_5.Enabled = false;
+            this.textBox4_5.Location = new System.Drawing.Point(598, 228);
+            this.textBox4_5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBox4_5.Name = "textBox4_5";
+            this.textBox4_5.Size = new System.Drawing.Size(378, 22);
+            this.textBox4_5.TabIndex = 54;
+            // 
+            // textBox4_1
+            // 
+            this.textBox4_1.Location = new System.Drawing.Point(598, 21);
+            this.textBox4_1.Name = "textBox4_1";
+            this.textBox4_1.Size = new System.Drawing.Size(108, 22);
+            this.textBox4_1.TabIndex = 53;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(723, 21);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(129, 17);
+            this.label18.TabIndex = 52;
+            this.label18.Text = "Количество чисел";
+            // 
+            // chart4
+            // 
+            chartArea4.Name = "ChartArea1";
+            this.chart4.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart4.Legends.Add(legend4);
+            this.chart4.Location = new System.Drawing.Point(17, 21);
+            this.chart4.Name = "chart4";
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series7.Legend = "Legend1";
+            series7.Name = "Series1";
+            this.chart4.Series.Add(series7);
+            this.chart4.Size = new System.Drawing.Size(520, 300);
+            this.chart4.TabIndex = 0;
+            this.chart4.Text = "chart4";
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.textBox5_2_1);
+            this.tabPage5.Controls.Add(this.textBox5_1_1);
+            this.tabPage5.Controls.Add(this.label34);
+            this.tabPage5.Controls.Add(this.label33);
+            this.tabPage5.Controls.Add(this.button7);
+            this.tabPage5.Controls.Add(this.label32);
+            this.tabPage5.Controls.Add(this.label31);
+            this.tabPage5.Controls.Add(this.textBox5_6);
+            this.tabPage5.Controls.Add(this.textBox5_3);
+            this.tabPage5.Controls.Add(this.pictureBox1);
+            this.tabPage5.Controls.Add(this.label30);
+            this.tabPage5.Controls.Add(this.textBox5_5);
+            this.tabPage5.Controls.Add(this.textBox5_2);
+            this.tabPage5.Controls.Add(this.label29);
+            this.tabPage5.Controls.Add(this.label28);
+            this.tabPage5.Controls.Add(this.label27);
+            this.tabPage5.Controls.Add(this.label26);
+            this.tabPage5.Controls.Add(this.label25);
+            this.tabPage5.Controls.Add(this.button6);
+            this.tabPage5.Controls.Add(this.button5);
+            this.tabPage5.Controls.Add(this.textBox5_8);
+            this.tabPage5.Controls.Add(this.textBox5_4);
+            this.tabPage5.Controls.Add(this.textBox5_7);
+            this.tabPage5.Controls.Add(this.textBox5_1);
+            this.tabPage5.Controls.Add(this.label24);
+            this.tabPage5.Location = new System.Drawing.Point(4, 25);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(1124, 396);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Игра";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button7.Location = new System.Drawing.Point(928, 309);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(172, 47);
+            this.button7.TabIndex = 20;
+            this.button7.Text = "Сыграть заново";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(928, 219);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(72, 17);
+            this.label32.TabIndex = 19;
+            this.label32.Text = "Действие";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(370, 219);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(76, 17);
+            this.label31.TabIndex = 18;
+            this.label31.Text = "Действие:";
+            // 
+            // textBox5_6
+            // 
+            this.textBox5_6.Location = new System.Drawing.Point(928, 239);
+            this.textBox5_6.Multiline = true;
+            this.textBox5_6.Name = "textBox5_6";
+            this.textBox5_6.ReadOnly = true;
+            this.textBox5_6.Size = new System.Drawing.Size(172, 46);
+            this.textBox5_6.TabIndex = 17;
+            // 
+            // textBox5_3
+            // 
+            this.textBox5_3.Location = new System.Drawing.Point(370, 239);
+            this.textBox5_3.Multiline = true;
+            this.textBox5_3.Name = "textBox5_3";
+            this.textBox5_3.ReadOnly = true;
+            this.textBox5_3.Size = new System.Drawing.Size(172, 46);
+            this.textBox5_3.TabIndex = 16;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(41, 98);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(226, 227);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 15;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(644, 162);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(70, 17);
+            this.label30.TabIndex = 14;
+            this.label30.Text = "Победил:";
+            // 
+            // textBox5_5
+            // 
+            this.textBox5_5.Location = new System.Drawing.Point(928, 128);
+            this.textBox5_5.Name = "textBox5_5";
+            this.textBox5_5.ReadOnly = true;
+            this.textBox5_5.Size = new System.Drawing.Size(172, 22);
+            this.textBox5_5.TabIndex = 13;
+            // 
+            // textBox5_2
+            // 
+            this.textBox5_2.Location = new System.Drawing.Point(370, 128);
+            this.textBox5_2.Name = "textBox5_2";
+            this.textBox5_2.ReadOnly = true;
+            this.textBox5_2.Size = new System.Drawing.Size(172, 22);
+            this.textBox5_2.TabIndex = 12;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(928, 108);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(124, 17);
+            this.label29.TabIndex = 11;
+            this.label29.Text = "Счёт компьютера";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(367, 108);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(88, 17);
+            this.label28.TabIndex = 10;
+            this.label28.Text = "Счёт игрока";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(928, 35);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(120, 17);
+            this.label27.TabIndex = 9;
+            this.label27.Text = "Компьютер ввёл:";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(370, 35);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(110, 17);
+            this.label26.TabIndex = 8;
+            this.label26.Text = "Введите число:";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(641, 108);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(96, 17);
+            this.label25.TabIndex = 7;
+            this.label25.Text = "Окно ошибок";
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(660, 35);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(108, 32);
+            this.button6.TabIndex = 6;
+            this.button6.Text = "Подсказка";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button5
+            // 
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button5.Location = new System.Drawing.Point(647, 250);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(205, 57);
+            this.button5.TabIndex = 5;
+            this.button5.Text = "Бросить";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // textBox5_8
+            // 
+            this.textBox5_8.Location = new System.Drawing.Point(644, 182);
+            this.textBox5_8.Name = "textBox5_8";
+            this.textBox5_8.ReadOnly = true;
+            this.textBox5_8.Size = new System.Drawing.Size(208, 22);
+            this.textBox5_8.TabIndex = 4;
+            // 
+            // textBox5_4
+            // 
+            this.textBox5_4.Location = new System.Drawing.Point(928, 66);
+            this.textBox5_4.Name = "textBox5_4";
+            this.textBox5_4.ReadOnly = true;
+            this.textBox5_4.Size = new System.Drawing.Size(172, 22);
+            this.textBox5_4.TabIndex = 3;
+            // 
+            // textBox5_7
+            // 
+            this.textBox5_7.Location = new System.Drawing.Point(598, 128);
+            this.textBox5_7.Name = "textBox5_7";
+            this.textBox5_7.ReadOnly = true;
+            this.textBox5_7.Size = new System.Drawing.Size(294, 22);
+            this.textBox5_7.TabIndex = 2;
+            // 
+            // textBox5_1
+            // 
+            this.textBox5_1.Location = new System.Drawing.Point(370, 66);
+            this.textBox5_1.Name = "textBox5_1";
+            this.textBox5_1.Size = new System.Drawing.Size(172, 22);
+            this.textBox5_1.TabIndex = 1;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label24.Location = new System.Drawing.Point(54, 27);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(186, 44);
+            this.label24.TabIndex = 0;
+            this.label24.Text = "3 Кубика";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(370, 157);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(133, 17);
+            this.label33.TabIndex = 21;
+            this.label33.Text = "Значения кубиков:";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(928, 162);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(133, 17);
+            this.label34.TabIndex = 22;
+            this.label34.Text = "Значения кубиков:";
+            // 
+            // textBox5_1_1
+            // 
+            this.textBox5_1_1.Location = new System.Drawing.Point(370, 178);
+            this.textBox5_1_1.Name = "textBox5_1_1";
+            this.textBox5_1_1.ReadOnly = true;
+            this.textBox5_1_1.Size = new System.Drawing.Size(172, 22);
+            this.textBox5_1_1.TabIndex = 23;
+            // 
+            // textBox5_2_1
+            // 
+            this.textBox5_2_1.Location = new System.Drawing.Point(928, 182);
+            this.textBox5_2_1.Name = "textBox5_2_1";
+            this.textBox5_2_1.ReadOnly = true;
+            this.textBox5_2_1.Size = new System.Drawing.Size(172, 22);
+            this.textBox5_2_1.TabIndex = 24;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -777,6 +1055,9 @@ namespace Grafs
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart4)).EndInit();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -843,6 +1124,31 @@ namespace Grafs
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox textBox4_4;
+        private System.Windows.Forms.TextBox textBox5_8;
+        private System.Windows.Forms.TextBox textBox5_4;
+        private System.Windows.Forms.TextBox textBox5_7;
+        private System.Windows.Forms.TextBox textBox5_1;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.TextBox textBox5_5;
+        private System.Windows.Forms.TextBox textBox5_2;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.TextBox textBox5_6;
+        private System.Windows.Forms.TextBox textBox5_3;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.TextBox textBox5_2_1;
+        private System.Windows.Forms.TextBox textBox5_1_1;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label label33;
     }
 }
 
