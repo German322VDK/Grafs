@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,27 +15,34 @@ namespace Grafs
         /// bitness - разрядность
         /// N - основание
         /// </summary>
-        private long count, bitness;
+        private int count;
+        int bitness;
         private long[] ax;
         private long[] ay;
         private double[] rx, ry, ranx, rany;
         private double pw;
         private long M;
 
-        private double A;
+        private double A4;
         private double b;
 
         private const int N = 10;
 
         private const string ser2 = "C# Rand";
 
+        const string filePath1 = "MiddleSqure.txt";
+        const string filePath2 = "MiddleMultyPly.txt";
+        const string filePath3 = "MethMixing.txt";
+        const string filePath4 = "LineKon.txt";
+
         void PrintGraf(int cht)
         {
             if (cht == 1)
             {
-                using (StreamWriter file1 = new StreamWriter("MiddleSqure.txt"))
+                using (var file1 = new StreamWriter(filePath1))
                 {
-                    file1.WriteLine($"i  r[i]    a[i]    N=10    count={count}   bitness={bitness}");
+                    file1.WriteLine($"N=10    count={count}   bitness={bitness}"); 
+                    file1.WriteLine("i      rx[i]       ry[i]       ax[i]       ay[i]");
                     //отрисовка графиков
                     for (int i = 0; i < count; i++)
                     {
@@ -48,14 +54,15 @@ namespace Grafs
                         chart1.Series["Series1"].Points.AddXY(rx[i], ry[i]);
                         chart1.Series["Series2"].Points.AddXY(rany[i], ranx[i]);
 
-                        file1.WriteLine(i + "   " + rx[i] + "    " + ax[i]);
+                        file1.WriteLine(i + "   " + rx[i] + "    " + ry[i] 
+                            + "  " + ax[i] + "    " + ay[i]);
                     }
                 }
                 return;
             }
             else if (cht == 2)
             {
-                using (StreamWriter file2 = new StreamWriter("MiddleMultyPly.txt"))
+                using (StreamWriter file2 = new StreamWriter(filePath2))
                 {
                     file2.WriteLine($"i  r[i]    a[i]    N=10    count={count}   bitness={bitness}");
                     //отрисовка графиков
@@ -69,14 +76,15 @@ namespace Grafs
                         chart2.Series["Series1"].Points.AddXY(rx[i], ry[i]);
                         chart2.Series["Series2"].Points.AddXY(ranx[i], rany[i]);
 
-                        file2.WriteLine(i + "   " + rx[i] + "    " + ax[i]);
+                        file2.WriteLine(i + "   " + rx[i] + "    " + ry[i]
+                            + "  " + ax[i] + "    " + ay[i]);
                     }
                 }
                 return;
             }
             else if (cht == 3)
             {
-                using (StreamWriter file3 = new StreamWriter("MethMixing.txt"))
+                using (StreamWriter file3 = new StreamWriter(filePath3))
                 {
                     file3.WriteLine($"i  r[i]    a[i]    N=10    count={count}   bitness={bitness}");
                     //отрисовка графиков
@@ -97,9 +105,9 @@ namespace Grafs
             }
             else if(cht == 4)
             {
-                using (StreamWriter file4 = new StreamWriter("LineKon.txt"))
+                using (StreamWriter file4 = new StreamWriter(filePath4))
                 {
-                    file4.WriteLine($"i  r[i]    N=10    count={count}   a={A}" +
+                    file4.WriteLine($"i  r[i]    N=10    count={count}   a={A4}" +
                         $"  b={b}   M={M}");
                     //отрисовка графика
                     for (int i = 0; i < count; i++)
@@ -113,6 +121,7 @@ namespace Grafs
             }
         }
 
+        #region метод срединных квадратов
         //метод срединных квадратов
         public void MiddleSqure()
         {
@@ -132,13 +141,20 @@ namespace Grafs
             for (int i = 1; i < count; i++)
             {
                 //возводим в квадрат и отбрасываем последние числа
-                ax[i] = (long)((ax[i-1] * ax[i-1]) / Math.Pow(N, bitness/2));
+                ax[i] = (long)((ax[i - 1] * ax[i - 1]) / Math.Pow(N, bitness / 2));
                 //отбрасываем первые числа
                 ax[i] = (long)(ax[i] % pw);
+
+                while( ( ax[i] / 1000 ) < 1)
+                {
+                    ax[i] += 1;
+                    ax[i] *= 10;
+                }
+
                 //вычесляем r
                 rx[i] = ax[i] / pw;
 
-                if (rx[i] < 0) 
+                if (rx[i] < 0)
                     throw new ArgumentException("Получилось слишком большое число");
                 //вычесляем ran
                 ranx[i] = rand.NextDouble();
@@ -147,6 +163,13 @@ namespace Grafs
                 ay[i] = (long)((ay[i - 1] * ay[i - 1]) / Math.Pow(N, bitness / 2));
                 //отбрасываем первые числа
                 ay[i] = (long)(ay[i] % pw);
+
+                while ((ay[i] / 1000) < 1)
+                {
+                    ay[i] += 1;
+                    ay[i] *= 10;
+                }
+
                 //вычесляем r
                 ry[i] = ay[i] / pw;
 
@@ -156,128 +179,16 @@ namespace Grafs
                 rany[i] = rand.NextDouble();
             }
             PrintGraf(1);
-        }
 
-        //метод срединных произведений
-        public void MiddleMultyPly()
-        {
-            //подписываем график
-            chart2.Series["Series1"].LegendText = "mid mult";
-            //объект рандома
-            Random rand = new Random();
-
-            //вычесление первого и второго r x
-            rx[0] = ax[0] / pw;
-            rx[1] = ax[1] / pw;
-            //вычесление первого и второго ran x
-            ranx[0] = rand.NextDouble();
-            ranx[1] = rand.NextDouble();
-
-            //вычесление первого и второго r x
-            ry[0] = ay[0] / pw;
-            ry[1] = ay[1] / pw;
-            //вычесление первого и второго ran x
-            rany[0] = rand.NextDouble();
-            rany[1] = rand.NextDouble();
-
-            //цикл вычесления r и ran
-            for (int i = 2; i < count; i++)
+            using (var sr = new StreamReader(filePath1))
             {
-                //перемножаем и отбрасываем последние числа
-                ax[i] = (long)((ax[i - 1] * ax[i - 2]) / Math.Pow(N, bitness / 2));
-                //отбрасываем первые числа
-                ax[i] = (long)(ax[i] % pw);
-                //вычесляем r
-                rx[i] = ax[i] / pw;
+                var str = sr.ReadToEnd();
 
-                if (rx[i] < 0)
-                    throw new ArgumentException("Получилось слишком большое число");
-                //вычесляем ran
-                ranx[i] = rand.NextDouble();
-
-                //перемножаем и отбрасываем последние числа
-                ay[i] = (long)((ay[i - 1] * ay[i - 2]) / Math.Pow(N, bitness / 2));
-                //отбрасываем первые числа
-                ay[i] = (long)(ay[i] % pw);
-                //вычесляем r
-                ry[i] = ay[i] / pw;
-
-                if (ry[i] < 0)
-                    throw new ArgumentException("Получилось слишком большое число");
-                //вычесляем ran
-                rany[i] = rand.NextDouble();
+                textBox1_2_1.Text = str.ToString();
             }
-            PrintGraf(2);
         }
 
-        //метод перемешивания
-        public void MethMixing()
-        {
-            //подписываем график
-            chart1.Series["Series1"].LegendText = "meth mix";
-            //объект рандома
-            Random rand = new Random();
-            //переменные сдвига влево и вправо
-            long a1, a2;
-            //переменные для сдвига влево и вправо
-            long mx1 = (int)Math.Pow(N, (3 * bitness) / 4);
-            long mx2 = (int)Math.Pow(N, bitness / 4);
-            //получение первого значение массива r и массива ran
-            rx[0] = ax[0] / pw;
-            ranx[0] = rand.NextDouble();
-
-            //получение первого значение массива r и массива ran
-            ry[0] = ay[0] / pw;
-            rany[0] = rand.NextDouble();
-
-            //цикл вычесления r и ran
-            for (int i = 1; i < count; i++)
-            {
-                a1 = (ax[i - 1] % mx1) * mx2 + (ax[i - 1] / mx1); //сдвиг влево
-                a2 = (ax[i - 1] % mx2) * mx1 + (ax[i - 1] / mx2); //сдвиг вправо
-                //отбрасываем первые числа
-                ax[i] = (long)((a1 + a2) % pw);
-                //отбрасываем последние числа, вычесляем r
-                rx[i] = ax[i] / pw;
-
-                if (rx[i] < 0)
-                    throw new ArgumentException("Получилось слишком большое число");
-                //вычесляем ran
-                ranx[i] = rand.NextDouble();
-
-                a1 = (ay[i - 1] % mx1) * mx2 + (ay[i - 1] / mx1); //сдвиг влево
-                a2 = (ay[i - 1] % mx2) * mx1 + (ay[i - 1] / mx2); //сдвиг вправо
-                //отбрасываем первые числа
-                ay[i] = (long)((a1 + a2) % pw);
-                //отбрасываем последние числа, вычесляем r
-                ry[i] = ay[i] / pw;
-
-                if (ry[i] < 0)
-                    throw new ArgumentException("Получилось слишком большое число");
-                //вычесляем ran
-                rany[i] = rand.NextDouble();
-            }
-            PrintGraf(3);
-        }
-
-        //Линейный конгруэнтный метод
-        public void LineKon()
-        {
-            //подписываем график
-            chart1.Series["Series1"].LegendText = "line con";
-
-            b = 0.21131 * M;
-
-            for (int i = 1; i < count; i++)
-            {
-                rx[i] = (int)((A * rx[i - 1] + b) % M);
-                ry[i] = (int)((A * ry[i - 1] + b) % M);
-            }
-
-            PrintGraf(4);
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             try
             {
@@ -334,7 +245,263 @@ namespace Grafs
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button8_Click(object sender, EventArgs e)
+        {
+            chart5.Series["Series1"].Points.Clear();
+            chart6.Series["Series1"].Points.Clear();
+            chart7.Series["Series1"].Points.Clear();
+            textBox1_T.Text = "Nan";
+            int itn = 40;
+            double axn = ax[itn];
+
+            for (int i = itn + 1; i < ax.Length; i++)
+            {
+                if (axn == ax[i])
+                {
+                    textBox1_T.Text = (i - itn - 1).ToString();
+                    break;
+                }
+            }
+
+            int g = 1;
+            double[] rN100 = new double[120];
+            int[] xN100 = new int[120];
+            int M = 10;//основание
+            int n = bitness;
+            if ((n % 2) != 0) n++;
+            int Mn = (int)Math.Pow(M, n);
+            double Disp100 = 0;
+            double Mat100 = 0;
+            double Summ = 0;
+            double Summ2 = 0;
+            xN100[0] = Convert.ToInt32(textBox1_3.Text);
+            rN100[0] = xN100[0];//расчет r 0-го;
+            rN100[0] /= Mn;//расчет r 0-го;
+            int[] A = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+
+            for (int i = 1; i < 100; i++)
+            { // расчет в цикле
+                xN100[i] = (int)( (xN100[i - 1] * xN100[i - 1]) / Math.Pow(M, (n / 2)) );//расчет x i-го;
+                xN100[i] %= Mn;//расчет x i-го;
+                rN100[i] = xN100[i];//расчет r i-го;
+                rN100[i] /= Mn;//расчет r i-го;
+                Summ += rN100[i];
+                Summ2 += (rN100[i] * rN100[i]);
+                int switch_on = (int)( (rN100[i] * 10) + 1);
+                switch (switch_on)
+                {
+                    case 1:
+                        A[0]++;
+                        break;
+                    case 2:
+                        A[1]++;
+                        break;
+                    case 3:
+                        A[2]++;
+                        break;
+                    case 4:
+                        A[3]++;
+                        break;
+                    case 5:
+                        A[4]++;
+                        break;
+                    case 6:
+                        A[5]++;
+                        break;
+                    case 7:
+                        A[6]++;
+                        break;
+                    case 8:
+                        A[7]++;
+                        break;
+                    case 9:
+                        A[8]++;
+                        break;
+                    case 10:
+                        A[9]++;
+                        break;
+                }
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                chart5.Series["Series1"].Points.AddXY(i + 1, A[i]);
+            }
+
+            Mat100 = Summ / 100;//box 4
+            Disp100 = (Summ2 / 100) - (Mat100 * Mat100);//box 5
+            textBox1_1MX.Text = Convert.ToString(Mat100);
+            textBox1_1DX.Text = Convert.ToString(Disp100);
+            
+            double Disp1000 = 0;
+            double Mat1000 = 0;
+            Summ = 0;
+            Summ2 = 0;
+            double[] rN1000 = new double[1020];
+            int[] xN1000 = new int[1020];
+            xN1000[0] = Convert.ToInt32(textBox1_3.Text);
+            rN1000[0] = xN1000[0];//расчет r 0-го;
+            rN1000[0] /= Mn;//расчет r 0-го;
+            int[] B= { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            for (int i = 1; i < 1000; i++)
+            { // расчет в цикле
+                xN1000[i] = (int)((xN1000[i - 1] * xN1000[i - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
+                xN1000[i] %= Mn;//расчет x i-го;
+                rN1000[i] = xN1000[i];//расчет r i-го;
+                rN1000[i] /= Mn;//расчет r i-го;
+                Summ += rN1000[i];
+                Summ2 += (rN1000[i] * rN1000[i]);
+                int switch_on = (int)((rN1000[i] * 10) + 1);
+                switch (switch_on)
+                {
+                    case 1:
+                        B[0]++;
+                        break;
+                    case 2:
+                        B[1]++;
+                        break;
+                    case 3:
+                        B[2]++;
+                        break;
+                    case 4:
+                        B[3]++;
+                        break;
+                    case 5:
+                        B[4]++;
+                        break;
+                    case 6:
+                        B[5]++;
+                        break;
+                    case 7:
+                        B[6]++;
+                        break;
+                    case 8:
+                        B[7]++;
+                        break;
+                    case 9:
+                        B[8]++;
+                        break;
+                    case 10:
+                        B[9]++;
+                        break;
+                }
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                chart6.Series["Series1"].Points.AddXY(i + 1, B[i]);
+            }
+
+            Mat1000 = Summ / 1000;//7
+            Disp1000 = (Summ2 / 1000) - (Mat1000 * Mat1000);//6
+            textBox1_2MX.Text = Convert.ToString(Mat1000);
+            textBox1_2DX.Text = Convert.ToString(Disp1000);
+
+            double Rg = 0;
+            double MRg = 0;
+            double MRgSumm = 0;
+
+            for (int i = 0; i < 990; i++)
+            {
+                MRgSumm = 0;
+                for (int j = 1; j < (10 + i + g); j++)
+                {
+                    xN1000[j] = (int)( (xN1000[j - 1] * xN1000[j - 1]) / Math.Pow(M, (n / 2)) );//расчет x i-го;
+                    xN1000[j] %= Mn;//расчет x i-го;
+                    rN1000[j] = xN1000[j];//расчет r i-го;
+                    rN1000[j] /= Mn;//расчет r i-го;
+                }
+                for (int j = 0; j < (10 + i); j++) 
+                    MRgSumm += (rN1000[j] * rN1000[j + g]);
+                MRg = MRgSumm / (10 + i - g);
+                Rg = 12 * MRg - 3;
+                chart7.Series["Series1"].Points.AddXY(i, Rg);
+
+            }
+
+            string s = "";
+
+            for (int i = 0; i < count; i++)
+                s += Convert.ToString(rx[i]) + "\t" + Convert.ToString((int)((rx[i] * 10) + 1)) + "\t";
+            textBox1_2_2.Text = s;
+        }
+
+        #endregion
+
+        #region метод срединных произведений
+
+        //метод срединных произведений
+        public void MiddleMultyPly()
+        {
+            //подписываем график
+            chart2.Series["Series1"].LegendText = "mid mult";
+            //объект рандома
+            Random rand = new Random();
+
+            //вычесление первого и второго r x
+            rx[0] = ax[0] / pw;
+            rx[1] = ax[1] / pw;
+            //вычесление первого и второго ran x
+            ranx[0] = rand.NextDouble();
+            ranx[1] = rand.NextDouble();
+
+            //вычесление первого и второго r x
+            ry[0] = ay[0] / pw;
+            ry[1] = ay[1] / pw;
+            //вычесление первого и второго ran x
+            rany[0] = rand.NextDouble();
+            rany[1] = rand.NextDouble();
+
+            //цикл вычесления r и ran
+            for (int i = 2; i < count; i++)
+            {
+                //перемножаем и отбрасываем последние числа
+                ax[i] = (long)((ax[i - 1] * ax[i - 2]) / Math.Pow(N, bitness / 2));
+                //отбрасываем первые числа
+                ax[i] = (long)(ax[i] % pw);
+                //вычесляем r
+                rx[i] = ax[i] / pw;
+
+                if (rx[i] < 0)
+                    throw new ArgumentException("Получилось слишком большое число");
+                //вычесляем ran
+                ranx[i] = rand.NextDouble();
+
+                while ((ax[i] / 1000) < 1)
+                {
+                    ax[i] += 1;
+                    ax[i] *= 10;
+                }
+
+                //перемножаем и отбрасываем последние числа
+                ay[i] = (long)((ay[i - 1] * ay[i - 2]) / Math.Pow(N, bitness / 2));
+                //отбрасываем первые числа
+                ay[i] = (long)(ay[i] % pw);
+                //вычесляем r
+                ry[i] = ay[i] / pw;
+
+                if (ry[i] < 0)
+                    throw new ArgumentException("Получилось слишком большое число");
+                //вычесляем ran
+                rany[i] = rand.NextDouble();
+
+                while ((ay[i] / 1000) < 1)
+                {
+                    ay[i] += 1;
+                    ay[i] *= 10;
+                }
+            }
+            PrintGraf(2); 
+
+            using (var sr = new StreamReader(filePath2))
+            {
+                var str = sr.ReadToEnd();
+
+                textBox2_2_1.Text = str.ToString();
+            }
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
         {
             try
             {
@@ -404,7 +571,245 @@ namespace Grafs
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button9_Click(object sender, EventArgs e)
+        {
+            chart2_2_1.Series["Series1"].Points.Clear();
+            chart2_2_2.Series["Series1"].Points.Clear();
+            chart2_2_3.Series["Series1"].Points.Clear();
+            textBox2_T.Text = "Nan";
+            int itn = 0;
+            double axn = ax[itn];
+
+            for (int i = itn + 1; i < ax.Length; i++)
+            {
+                if (axn == ax[i])
+                {
+                    textBox2_T.Text = (i - itn - 1).ToString();
+                    break;
+                }
+            }
+
+            if(textBox2_T.Text == "Nan")
+            {
+                textBox2_T.Text = $"{count}";
+            }
+
+            int g = 1;
+            double[] rN100 = new double[120];
+            int[] xN100 = new int[120];
+            int M = 10;//основание
+            int n = bitness;
+            if ((n % 2) != 0) n++;
+            int Mn = (int)Math.Pow(M, n);
+            double Disp100 = 0;
+            double Mat100 = 0;
+            double Summ = 0;
+            double Summ2 = 0;
+            xN100[0] = Convert.ToInt32(textBox2_3.Text);
+            rN100[0] = xN100[0];//расчет r 0-го;
+            rN100[0] /= Mn;//расчет r 0-го;
+            int[] A = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+
+            for (int i = 1; i < 100; i++)
+            { // расчет в цикле
+                xN100[i] = (int)((xN100[i - 1] * xN100[i - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
+                xN100[i] %= Mn;//расчет x i-го;
+                rN100[i] = xN100[i];//расчет r i-го;
+                rN100[i] /= Mn;//расчет r i-го;
+                Summ += rN100[i];
+                Summ2 += (rN100[i] * rN100[i]);
+                int switch_on = (int)((rN100[i] * 10) + 1);
+                switch (switch_on)
+                {
+                    case 1:
+                        A[0]++;
+                        break;
+                    case 2:
+                        A[1]++;
+                        break;
+                    case 3:
+                        A[2]++;
+                        break;
+                    case 4:
+                        A[3]++;
+                        break;
+                    case 5:
+                        A[4]++;
+                        break;
+                    case 6:
+                        A[5]++;
+                        break;
+                    case 7:
+                        A[6]++;
+                        break;
+                    case 8:
+                        A[7]++;
+                        break;
+                    case 9:
+                        A[8]++;
+                        break;
+                    case 10:
+                        A[9]++;
+                        break;
+                }
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                chart2_2_1.Series["Series1"].Points.AddXY(i + 1, A[i]);
+            }
+
+            Mat100 = Summ / 100;//box 4
+            Disp100 = (Summ2 / 100) - (Mat100 * Mat100);//box 5
+            textBox2_1MX.Text = Convert.ToString(Mat100);
+            textBox2_1DX.Text = Convert.ToString(Disp100);
+
+            double Disp1000 = 0;
+            double Mat1000 = 0;
+            Summ = 0;
+            Summ2 = 0;
+            double[] rN1000 = new double[1020];
+            int[] xN1000 = new int[1020];
+            xN1000[0] = Convert.ToInt32(textBox2_3.Text);
+            rN1000[0] = xN1000[0];//расчет r 0-го;
+            rN1000[0] /= Mn;//расчет r 0-го;
+            int[] B = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            for (int i = 1; i < 1000; i++)
+            { // расчет в цикле
+                xN1000[i] = (int)((xN1000[i - 1] * xN1000[i - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
+                xN1000[i] %= Mn;//расчет x i-го;
+                rN1000[i] = xN1000[i];//расчет r i-го;
+                rN1000[i] /= Mn;//расчет r i-го;
+                Summ += rN1000[i];
+                Summ2 += (rN1000[i] * rN1000[i]);
+                int switch_on = (int)((rN1000[i] * 10) + 1);
+                switch (switch_on)
+                {
+                    case 1:
+                        B[0]++;
+                        break;
+                    case 2:
+                        B[1]++;
+                        break;
+                    case 3:
+                        B[2]++;
+                        break;
+                    case 4:
+                        B[3]++;
+                        break;
+                    case 5:
+                        B[4]++;
+                        break;
+                    case 6:
+                        B[5]++;
+                        break;
+                    case 7:
+                        B[6]++;
+                        break;
+                    case 8:
+                        B[7]++;
+                        break;
+                    case 9:
+                        B[8]++;
+                        break;
+                    case 10:
+                        B[9]++;
+                        break;
+                }
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                chart2_2_2.Series["Series1"].Points.AddXY(i + 1, B[i]);
+            }
+
+            Mat1000 = Summ / 1000;//7
+            Disp1000 = (Summ2 / 1000) - (Mat1000 * Mat1000);//6
+            textBox2_2MX.Text = Convert.ToString(Mat1000);
+            textBox2_2DX.Text = Convert.ToString(Disp1000);
+
+            double Rg = 0;
+            double MRg = 0;
+            double MRgSumm = 0;
+
+            for (int i = 0; i < 990; i++)
+            {
+                MRgSumm = 0;
+                for (int j = 1; j < (10 + i + g); j++)
+                {
+                    xN1000[j] = (int)((xN1000[j - 1] * xN1000[j - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
+                    xN1000[j] %= Mn;//расчет x i-го;
+                    rN1000[j] = xN1000[j];//расчет r i-го;
+                    rN1000[j] /= Mn;//расчет r i-го;
+                }
+                for (int j = 0; j < (10 + i); j++)
+                    MRgSumm += (rN1000[j] * rN1000[j + g]);
+                MRg = MRgSumm / (10 + i - g);
+                Rg = 12 * MRg - 3;
+                chart2_2_3.Series["Series1"].Points.AddXY(i, Rg);
+
+            }
+
+            string s = "";
+
+            for (int i = 0; i < count; i++)
+                s += Convert.ToString(rx[i]) + "\t" + Convert.ToString((int)((rx[i] * 10) + 1)) + "\t";
+            textBox2_2_2.Text = s;
+        }
+
+        #endregion
+
+        #region метод перемешивания
+        //метод перемешивания
+        public void MethMixing()
+        {
+            //подписываем график
+            chart1.Series["Series1"].LegendText = "meth mix";
+            //объект рандома
+            Random rand = new Random();
+            //переменные сдвига влево и вправо
+            long a1, a2;
+            //переменные для сдвига влево и вправо
+            long mx1 = (int)Math.Pow(N, (3 * bitness) / 4);
+            long mx2 = (int)Math.Pow(N, bitness / 4);
+            //получение первого значение массива r и массива ran
+            rx[0] = ax[0] / pw;
+            ranx[0] = rand.NextDouble();
+
+            //получение первого значение массива r и массива ran
+            ry[0] = ay[0] / pw;
+            rany[0] = rand.NextDouble();
+
+            //цикл вычесления r и ran
+            for (int i = 1; i < count; i++)
+            {
+                a1 = (ax[i - 1] % mx1) * mx2 + (ax[i - 1] / mx1); //сдвиг влево
+                a2 = (ax[i - 1] % mx2) * mx1 + (ax[i - 1] / mx2); //сдвиг вправо
+                //отбрасываем первые числа
+                ax[i] = (long)((a1 + a2) % pw);
+                //отбрасываем последние числа, вычесляем r
+                rx[i] = ax[i] / pw;
+
+                if (rx[i] < 0)
+                    throw new ArgumentException("Получилось слишком большое число");
+                //вычесляем ran
+                ranx[i] = rand.NextDouble();
+
+                a1 = (ay[i - 1] % mx1) * mx2 + (ay[i - 1] / mx1); //сдвиг влево
+                a2 = (ay[i - 1] % mx2) * mx1 + (ay[i - 1] / mx2); //сдвиг вправо
+                //отбрасываем первые числа
+                ay[i] = (long)((a1 + a2) % pw);
+                //отбрасываем последние числа, вычесляем r
+                ry[i] = ay[i] / pw;
+
+                if (ry[i] < 0)
+                    throw new ArgumentException("Получилось слишком большое число");
+                //вычесляем ran
+                rany[i] = rand.NextDouble();
+            }
+            PrintGraf(3);
+        }
+        private void button3_Click_1(object sender, EventArgs e)
         {
             try
             {
@@ -461,7 +866,209 @@ namespace Grafs
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void button10_Click(object sender, EventArgs e)
+        {
+            chart3_2_1.Series["Series1"].Points.Clear();
+            chart3_2_2.Series["Series1"].Points.Clear();
+            chart3_2_3.Series["Series1"].Points.Clear();
+            textBox3_T.Text = "Nan";
+            int itn = 40;
+            double axn = ax[itn];
+
+            for (int i = itn + 1; i < ax.Length; i++)
+            {
+                if (axn == ax[i])
+                {
+                    textBox3_T.Text = (i - itn - 1).ToString();
+                    break;
+                }
+            }
+
+            int g = 1;
+            double[] rN100 = new double[120];
+            int[] xN100 = new int[120];
+            int M = 10;//основание
+            int n = bitness;
+            if ((n % 2) != 0) n++;
+            int Mn = (int)Math.Pow(M, n);
+            double Disp100 = 0;
+            double Mat100 = 0;
+            double Summ = 0;
+            double Summ2 = 0;
+            xN100[0] = Convert.ToInt32(textBox3_3.Text);
+            rN100[0] = xN100[0];//расчет r 0-го;
+            rN100[0] /= Mn;//расчет r 0-го;
+            int[] A = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+
+            for (int i = 1; i < 100; i++)
+            { // расчет в цикле
+                xN100[i] = (int)((xN100[i - 1] * xN100[i - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
+                xN100[i] %= Mn;//расчет x i-го;
+                rN100[i] = xN100[i];//расчет r i-го;
+                rN100[i] /= Mn;//расчет r i-го;
+                Summ += rN100[i];
+                Summ2 += (rN100[i] * rN100[i]);
+                int switch_on = (int)((rN100[i] * 10) + 1);
+                switch (switch_on)
+                {
+                    case 1:
+                        A[0]++;
+                        break;
+                    case 2:
+                        A[1]++;
+                        break;
+                    case 3:
+                        A[2]++;
+                        break;
+                    case 4:
+                        A[3]++;
+                        break;
+                    case 5:
+                        A[4]++;
+                        break;
+                    case 6:
+                        A[5]++;
+                        break;
+                    case 7:
+                        A[6]++;
+                        break;
+                    case 8:
+                        A[7]++;
+                        break;
+                    case 9:
+                        A[8]++;
+                        break;
+                    case 10:
+                        A[9]++;
+                        break;
+                }
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                chart3_2_1.Series["Series1"].Points.AddXY(i + 1, A[i]);
+            }
+
+            Mat100 = Summ / 100;//box 4
+            Disp100 = (Summ2 / 100) - (Mat100 * Mat100);//box 5
+            textBox3_1MX.Text = Convert.ToString(Mat100);
+            textBox3_1DX.Text = Convert.ToString(Disp100);
+
+            double Disp1000 = 0;
+            double Mat1000 = 0;
+            Summ = 0;
+            Summ2 = 0;
+            double[] rN1000 = new double[1020];
+            int[] xN1000 = new int[1020];
+            xN1000[0] = Convert.ToInt32(textBox3_3.Text);
+            rN1000[0] = xN1000[0];//расчет r 0-го;
+            rN1000[0] /= Mn;//расчет r 0-го;
+            int[] B = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            for (int i = 1; i < 1000; i++)
+            { // расчет в цикле
+                xN1000[i] = (int)((xN1000[i - 1] * xN1000[i - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
+                xN1000[i] %= Mn;//расчет x i-го;
+                rN1000[i] = xN1000[i];//расчет r i-го;
+                rN1000[i] /= Mn;//расчет r i-го;
+                Summ += rN1000[i];
+                Summ2 += (rN1000[i] * rN1000[i]);
+                int switch_on = (int)((rN1000[i] * 10) + 1);
+                switch (switch_on)
+                {
+                    case 1:
+                        B[0]++;
+                        break;
+                    case 2:
+                        B[1]++;
+                        break;
+                    case 3:
+                        B[2]++;
+                        break;
+                    case 4:
+                        B[3]++;
+                        break;
+                    case 5:
+                        B[4]++;
+                        break;
+                    case 6:
+                        B[5]++;
+                        break;
+                    case 7:
+                        B[6]++;
+                        break;
+                    case 8:
+                        B[7]++;
+                        break;
+                    case 9:
+                        B[8]++;
+                        break;
+                    case 10:
+                        B[9]++;
+                        break;
+                }
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                chart3_2_2.Series["Series1"].Points.AddXY(i + 1, B[i]);
+            }
+
+            Mat1000 = Summ / 1000;//7
+            Disp1000 = (Summ2 / 1000) - (Mat1000 * Mat1000);//6
+            textBox3_2MX.Text = Convert.ToString(Mat1000);
+            textBox3_2DX.Text = Convert.ToString(Disp1000);
+
+            double Rg = 0;
+            double MRg = 0;
+            double MRgSumm = 0;
+
+            for (int i = 0; i < 990; i++)
+            {
+                MRgSumm = 0;
+                for (int j = 1; j < (10 + i + g); j++)
+                {
+                    xN1000[j] = (int)((xN1000[j - 1] * xN1000[j - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
+                    xN1000[j] %= Mn;//расчет x i-го;
+                    rN1000[j] = xN1000[j];//расчет r i-го;
+                    rN1000[j] /= Mn;//расчет r i-го;
+                }
+                for (int j = 0; j < (10 + i); j++)
+                    MRgSumm += (rN1000[j] * rN1000[j + g]);
+                MRg = MRgSumm / (10 + i - g);
+                Rg = 12 * MRg - 3;
+                chart3_2_3.Series["Series1"].Points.AddXY(i, Rg);
+
+            }
+
+            string s = "";
+
+            for (int i = 0; i < count; i++)
+                s += Convert.ToString(rx[i]) + "\t" + Convert.ToString((int)((rx[i] * 10) + 1)) + "\t";
+            textBox3_2_2.Text = s;
+        }
+
+        #endregion
+
+        #region Линейный конгруэнтный метод
+
+        //Линейный конгруэнтный метод
+        public void LineKon()
+        {
+            //подписываем график
+            chart1.Series["Series1"].LegendText = "line con";
+
+            b = 0.21131 * M;
+
+            for (int i = 1; i < count; i++)
+            {
+                rx[i] = (int)((A4 * rx[i - 1] + b) % M);
+                ry[i] = (int)((A4 * ry[i - 1] + b) % M);
+            }
+
+            PrintGraf(4);
+        }
+
+        private void button4_Click_1(object sender, EventArgs e)
         {
             try
             {
@@ -479,9 +1086,9 @@ namespace Grafs
                 if (M < 1000)
                     throw new Exception("Должно быть больше 1000");
 
-                A = Convert.ToDouble(textBox4_3.Text);
+                A4 = Convert.ToDouble(textBox4_3.Text);
 
-                if ((A <= M / 100 || A >= (M - Math.Sqrt(M))) || (A % 8) != 5)
+                if ((A4 <= M / 100 || A4 >= (M - Math.Sqrt(M))) || (A4 % 8) != 5)
                     throw new Exception("A некоректно");
 
                 rx = new double[count + 1];
@@ -507,6 +1114,194 @@ namespace Grafs
                 textBox4_5.Text = er.Message;
             }
         }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            chart4_2_1.Series["Series1"].Points.Clear();
+            chart4_2_2.Series["Series1"].Points.Clear();
+            chart4_2_3.Series["Series1"].Points.Clear();
+            textBox4_T.Text = "Nan";
+            int itn = 0;
+            double axn = rx[itn];
+
+            for (int i = itn + 1; i < rx.Length; i++)
+            {
+                if (axn == rx[i])
+                {
+                    textBox4_T.Text = (i - itn - 1).ToString();
+                    break;
+                }
+            }
+
+            if (textBox4_T.Text == "Nan")
+            {
+                textBox4_T.Text = $"{count}";
+            }
+
+            int g = 1;
+            double[] rN100 = new double[120];
+            int[] xN100 = new int[120];
+            int M = 10;//основание
+            int n = bitness;
+            if ((n % 2) != 0) n++;
+            int Mn = (int)Math.Pow(M, n);
+            double Disp100 = 0;
+            double Mat100 = 0;
+            double Summ = 0;
+            double Summ2 = 0;
+            xN100[0] = Convert.ToInt32(textBox4_3.Text);
+            rN100[0] = xN100[0];//расчет r 0-го;
+            rN100[0] /= Mn;//расчет r 0-го;
+            int[] A = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+
+            for (int i = 1; i < 100; i++)
+            { // расчет в цикле
+                xN100[i] = (int)((xN100[i - 1] * xN100[i - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
+                xN100[i] %= Mn;//расчет x i-го;
+                rN100[i] = xN100[i];//расчет r i-го;
+                rN100[i] /= Mn;//расчет r i-го;
+                Summ += rN100[i];
+                Summ2 += (rN100[i] * rN100[i]);
+                int switch_on = (int)((rN100[i] * 10) + 1);
+                switch (switch_on)
+                {
+                    case 1:
+                        A[0]++;
+                        break;
+                    case 2:
+                        A[1]++;
+                        break;
+                    case 3:
+                        A[2]++;
+                        break;
+                    case 4:
+                        A[3]++;
+                        break;
+                    case 5:
+                        A[4]++;
+                        break;
+                    case 6:
+                        A[5]++;
+                        break;
+                    case 7:
+                        A[6]++;
+                        break;
+                    case 8:
+                        A[7]++;
+                        break;
+                    case 9:
+                        A[8]++;
+                        break;
+                    case 10:
+                        A[9]++;
+                        break;
+                }
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                chart4_2_1.Series["Series1"].Points.AddXY(i + 1, A[i]);
+            }
+
+            Mat100 = Summ / 100;//box 4
+            Disp100 = (Summ2 / 100) - (Mat100 * Mat100);//box 5
+            textBox4_1MX.Text = Convert.ToString(Mat100);
+            textBox4_1DX.Text = Convert.ToString(Disp100);
+
+            double Disp1000 = 0;
+            double Mat1000 = 0;
+            Summ = 0;
+            Summ2 = 0;
+            double[] rN1000 = new double[1020];
+            int[] xN1000 = new int[1020];
+            xN1000[0] = Convert.ToInt32(textBox4_3.Text);
+            rN1000[0] = xN1000[0];//расчет r 0-го;
+            rN1000[0] /= Mn;//расчет r 0-го;
+            int[] B = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            for (int i = 1; i < 1000; i++)
+            { // расчет в цикле
+                xN1000[i] = (int)((xN1000[i - 1] * xN1000[i - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
+                xN1000[i] %= Mn;//расчет x i-го;
+                rN1000[i] = xN1000[i];//расчет r i-го;
+                rN1000[i] /= Mn;//расчет r i-го;
+                Summ += rN1000[i];
+                Summ2 += (rN1000[i] * rN1000[i]);
+                int switch_on = (int)((rN1000[i] * 10) + 1);
+                switch (switch_on)
+                {
+                    case 1:
+                        B[0]++;
+                        break;
+                    case 2:
+                        B[1]++;
+                        break;
+                    case 3:
+                        B[2]++;
+                        break;
+                    case 4:
+                        B[3]++;
+                        break;
+                    case 5:
+                        B[4]++;
+                        break;
+                    case 6:
+                        B[5]++;
+                        break;
+                    case 7:
+                        B[6]++;
+                        break;
+                    case 8:
+                        B[7]++;
+                        break;
+                    case 9:
+                        B[8]++;
+                        break;
+                    case 10:
+                        B[9]++;
+                        break;
+                }
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                chart4_2_2.Series["Series1"].Points.AddXY(i + 1, B[i]);
+            }
+
+            Mat1000 = Summ / 1000;//7
+            Disp1000 = (Summ2 / 1000) - (Mat1000 * Mat1000);//6
+            textBox4_2MX.Text = Convert.ToString(Mat1000);
+            textBox4_2DX.Text = Convert.ToString(Disp1000);
+
+            double Rg = 0;
+            double MRg = 0;
+            double MRgSumm = 0;
+
+            for (int i = 0; i < 990; i++)
+            {
+                MRgSumm = 0;
+                for (int j = 1; j < (10 + i + g); j++)
+                {
+                    xN1000[j] = (int)((xN1000[j - 1] * xN1000[j - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
+                    xN1000[j] %= Mn;//расчет x i-го;
+                    rN1000[j] = xN1000[j];//расчет r i-го;
+                    rN1000[j] /= Mn;//расчет r i-го;
+                }
+                for (int j = 0; j < (10 + i); j++)
+                    MRgSumm += (rN1000[j] * rN1000[j + g]);
+                MRg = MRgSumm / (10 + i - g);
+                Rg = 12 * MRg - 3;
+                chart4_2_3.Series["Series1"].Points.AddXY(i, Rg);
+
+            }
+
+            string s = "";
+
+            for (int i = 0; i < count; i++)
+                s += Convert.ToString(rx[i]) + "\t" + Convert.ToString((int)((rx[i] * 10) + 1)) + "\t";
+            textBox4_2_2.Text = s;
+        }
+
+        #endregion
 
         #region Игра
 
@@ -672,6 +1467,7 @@ namespace Grafs
         }
 
         #endregion
+
         public Form1()
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
