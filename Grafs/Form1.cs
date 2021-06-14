@@ -21,7 +21,7 @@ namespace Grafs
         private long[] ay;
         private double[] rx, ry, ranx, rany;
         private double pw;
-        private long M;
+        private long M1;
 
         private double A4;
         private double b;
@@ -108,7 +108,7 @@ namespace Grafs
                 using (StreamWriter file4 = new StreamWriter(filePath4))
                 {
                     file4.WriteLine($"i  r[i]    N=10    count={count}   a={A4}" +
-                        $"  b={b}   M={M}");
+                        $"  b={b}   M={M1}");
                     //отрисовка графика
                     for (int i = 0; i < count; i++)
                     {
@@ -250,35 +250,53 @@ namespace Grafs
             chart5.Series["Series1"].Points.Clear();
             chart6.Series["Series1"].Points.Clear();
             chart7.Series["Series1"].Points.Clear();
-            textBox1_T.Text = "Nan";
-            int itn = 40;
-            double axn = ax[itn];
 
-            for (int i = itn + 1; i < ax.Length; i++)
+            #region Period
+
+            textBox1_T.Text = "Nan";
+            double axn;
+            bool flag = false;
+            for (int i = 0; i < rx.Length - 1; i++)
             {
-                if (axn == ax[i])
+                axn = rx[i];
+
+                for (int j = i + 1; j < rx.Length; j++)
                 {
-                    textBox1_T.Text = (i - itn - 1).ToString();
-                    break;
+                    if (rx[j] == axn)
+                    {
+                        textBox1_T.Text = (j - i - 1).ToString();
+                        flag = true;
+                        break;
+                    }
+
+                    if (flag)
+                        break;
                 }
             }
 
+            if (textBox1_T.Text == "Nan")
+            {
+                textBox1_T.Text = $"{count}";
+            }
+
+            #endregion
+
+            #region 100
+
             int g = 1;
-            double[] rN100 = new double[120];
-            int[] xN100 = new int[120];
+            double[] rN100 = new double[100];
+            int[] xN100 = new int[100];
             int M = 10;//основание
             int n = bitness;
             if ((n % 2) != 0) n++;
             int Mn = (int)Math.Pow(M, n);
-            double Disp100 = 0;
-            double Mat100 = 0;
+            double Disp100, Mat100;
             double Summ = 0;
             double Summ2 = 0;
             xN100[0] = Convert.ToInt32(textBox1_3.Text);
             rN100[0] = xN100[0];//расчет r 0-го;
             rN100[0] /= Mn;//расчет r 0-го;
             int[] A = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
 
             for (int i = 1; i < 100; i++)
             { // расчет в цикле
@@ -333,9 +351,12 @@ namespace Grafs
             Disp100 = (Summ2 / 100) - (Mat100 * Mat100);//box 5
             textBox1_1MX.Text = Convert.ToString(Mat100);
             textBox1_1DX.Text = Convert.ToString(Disp100);
-            
-            double Disp1000 = 0;
-            double Mat1000 = 0;
+
+            #endregion
+
+            #region 1000 
+
+            double Disp1000, Mat1000;
             Summ = 0;
             Summ2 = 0;
             double[] rN1000 = new double[1020];
@@ -387,6 +408,7 @@ namespace Grafs
                         break;
                 }
             }
+
             for (int i = 0; i < 10; i++)
             {
                 chart6.Series["Series1"].Points.AddXY(i + 1, B[i]);
@@ -397,9 +419,11 @@ namespace Grafs
             textBox1_2MX.Text = Convert.ToString(Mat1000);
             textBox1_2DX.Text = Convert.ToString(Disp1000);
 
-            double Rg = 0;
-            double MRg = 0;
-            double MRgSumm = 0;
+            #endregion
+
+            #region correlation
+
+            double Rg, MRg, MRgSumm;
 
             for (int i = 0; i < 990; i++)
             {
@@ -424,6 +448,9 @@ namespace Grafs
             for (int i = 0; i < count; i++)
                 s += Convert.ToString(rx[i]) + "\t" + Convert.ToString((int)((rx[i] * 10) + 1)) + "\t";
             textBox1_2_2.Text = s;
+
+            #endregion
+
         }
 
         #endregion
@@ -576,47 +603,59 @@ namespace Grafs
             chart2_2_1.Series["Series1"].Points.Clear();
             chart2_2_2.Series["Series1"].Points.Clear();
             chart2_2_3.Series["Series1"].Points.Clear();
-            textBox2_T.Text = "Nan";
-            int itn = 0;
-            double axn = ax[itn];
 
-            for (int i = itn + 1; i < ax.Length; i++)
+            #region Period
+
+            textBox2_T.Text = "Nan";
+            double axn;
+            bool flag = false;
+            for (int i = 0; i < rx.Length - 1; i++)
             {
-                if (axn == ax[i])
+                axn = rx[i];
+
+                for (int j = i + 1; j < rx.Length; j++)
                 {
-                    textBox2_T.Text = (i - itn - 1).ToString();
-                    break;
+                    if (rx[j] == axn)
+                    {
+                        textBox2_T.Text = (j - i - 1).ToString();
+                        flag = true;
+                        break;
+                    }
+
+                    if (flag)
+                        break;
                 }
             }
 
-            if(textBox2_T.Text == "Nan")
+            if (textBox2_T.Text == "Nan")
             {
                 textBox2_T.Text = $"{count}";
             }
 
+            #endregion
+
+            #region 100
+
             int g = 1;
-            double[] rN100 = new double[120];
-            int[] xN100 = new int[120];
+            double[] rN100 = new double[100];
+            int[] xN100 = new int[100];
             int M = 10;//основание
             int n = bitness;
             if ((n % 2) != 0) n++;
             int Mn = (int)Math.Pow(M, n);
-            double Disp100 = 0;
-            double Mat100 = 0;
+            double Disp100, Mat100;
             double Summ = 0;
             double Summ2 = 0;
             xN100[0] = Convert.ToInt32(textBox2_3.Text);
-            rN100[0] = xN100[0];//расчет r 0-го;
-            rN100[0] /= Mn;//расчет r 0-го;
+            rN100[0] = (double)xN100[0] / Mn;//расчет r 0-го;
+            xN100[1] = Convert.ToInt32(textBox2_3_2.Text);
+            rN100[1] = (double)xN100[1] / Mn;//расчет r 0-го;
             int[] A = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-
-            for (int i = 1; i < 100; i++)
+            for (int i = 2; i < 100; i++)
             { // расчет в цикле
-                xN100[i] = (int)((xN100[i - 1] * xN100[i - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
-                xN100[i] %= Mn;//расчет x i-го;
-                rN100[i] = xN100[i];//расчет r i-го;
-                rN100[i] /= Mn;//расчет r i-го;
+                xN100[i] = (int)((xN100[i - 1] * xN100[i - 2]) / Math.Pow(M, (n / 2))) % Mn;//расчет x i-го;
+                rN100[i] = (double)xN100[i] / Mn;//расчет r i-го;
                 Summ += rN100[i];
                 Summ2 += (rN100[i] * rN100[i]);
                 int switch_on = (int)((rN100[i] * 10) + 1);
@@ -665,22 +704,24 @@ namespace Grafs
             textBox2_1MX.Text = Convert.ToString(Mat100);
             textBox2_1DX.Text = Convert.ToString(Disp100);
 
-            double Disp1000 = 0;
-            double Mat1000 = 0;
+            #endregion
+
+            #region 1000
+
+            double Disp1000, Mat1000;
             Summ = 0;
             Summ2 = 0;
-            double[] rN1000 = new double[1020];
-            int[] xN1000 = new int[1020];
+            double[] rN1000 = new double[1000];
+            int[] xN1000 = new int[1000];
             xN1000[0] = Convert.ToInt32(textBox2_3.Text);
-            rN1000[0] = xN1000[0];//расчет r 0-го;
-            rN1000[0] /= Mn;//расчет r 0-го;
+            rN1000[0] = (double)xN1000[0] / Mn;//расчет r 0-го;
+            xN1000[1] = Convert.ToInt32(textBox2_3_2.Text);
+            rN1000[1] = (double)xN1000[1] / Mn;//расчет r 0-го;
             int[] B = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            for (int i = 1; i < 1000; i++)
+            for (int i = 2; i < 1000; i++)
             { // расчет в цикле
-                xN1000[i] = (int)((xN1000[i - 1] * xN1000[i - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
-                xN1000[i] %= Mn;//расчет x i-го;
-                rN1000[i] = xN1000[i];//расчет r i-го;
-                rN1000[i] /= Mn;//расчет r i-го;
+                xN1000[i] = (int)((xN1000[i - 1] * xN1000[i - 2]) / Math.Pow(M, (n / 2))) % Mn;//расчет x i-го;
+                rN1000[i] = (double)xN1000[i] / Mn;//расчет r i-го;
                 Summ += rN1000[i];
                 Summ2 += (rN1000[i] * rN1000[i]);
                 int switch_on = (int)((rN1000[i] * 10) + 1);
@@ -728,26 +769,25 @@ namespace Grafs
             textBox2_2MX.Text = Convert.ToString(Mat1000);
             textBox2_2DX.Text = Convert.ToString(Disp1000);
 
-            double Rg = 0;
-            double MRg = 0;
-            double MRgSumm = 0;
+            #endregion
+
+            #region correlation
+
+            double Rg, MRg, MRgSumm;
 
             for (int i = 0; i < 990; i++)
             {
                 MRgSumm = 0;
-                for (int j = 1; j < (10 + i + g); j++)
+                for (int j = 2; j < (10 + i + g); j++)
                 {
-                    xN1000[j] = (int)((xN1000[j - 1] * xN1000[j - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
-                    xN1000[j] %= Mn;//расчет x i-го;
-                    rN1000[j] = xN1000[j];//расчет r i-го;
-                    rN1000[j] /= Mn;//расчет r i-го;
+                    xN1000[j] = (int)((xN1000[j - 1] * xN1000[j - 2]) / Math.Pow(M, (n / 2))) % Mn;
+                    rN1000[j] = (double)xN1000[j] / Mn;
                 }
-                for (int j = 0; j < (10 + i); j++)
+                for (int j = 0; j < (10 + i); j++) 
                     MRgSumm += (rN1000[j] * rN1000[j + g]);
                 MRg = MRgSumm / (10 + i - g);
                 Rg = 12 * MRg - 3;
                 chart2_2_3.Series["Series1"].Points.AddXY(i, Rg);
-
             }
 
             string s = "";
@@ -755,6 +795,8 @@ namespace Grafs
             for (int i = 0; i < count; i++)
                 s += Convert.ToString(rx[i]) + "\t" + Convert.ToString((int)((rx[i] * 10) + 1)) + "\t";
             textBox2_2_2.Text = s;
+
+            #endregion
         }
 
         #endregion
@@ -809,6 +851,7 @@ namespace Grafs
             }
             PrintGraf(3);
         }
+
         private void button3_Click_1(object sender, EventArgs e)
         {
             try
@@ -871,42 +914,57 @@ namespace Grafs
             chart3_2_1.Series["Series1"].Points.Clear();
             chart3_2_2.Series["Series1"].Points.Clear();
             chart3_2_3.Series["Series1"].Points.Clear();
-            textBox3_T.Text = "Nan";
-            int itn = 40;
-            double axn = ax[itn];
 
-            for (int i = itn + 1; i < ax.Length; i++)
+            #region Period
+
+            textBox3_T.Text = "Nan";
+            double axn;
+            bool flag = false;
+            for (int i = 0; i < rx.Length - 1; i++)
             {
-                if (axn == ax[i])
+                axn = rx[i];
+
+                for (int j = i + 1; j < rx.Length; j++)
                 {
-                    textBox3_T.Text = (i - itn - 1).ToString();
-                    break;
+                    if (rx[j] == axn)
+                    {
+                        textBox3_T.Text = (j - i - 1).ToString();
+                        flag = true;
+                        break;
+                    }
+
+                    if (flag)
+                        break;
                 }
             }
 
+            if (textBox3_T.Text == "Nan")
+            {
+                textBox3_T.Text = $"{count}";
+            }
+
+            #endregion
+
+            #region 100
+
             int g = 1;
-            double[] rN100 = new double[120];
-            int[] xN100 = new int[120];
+            double[] rN100 = new double[100];
+            int[] xN100 = new int[100];
             int M = 10;//основание
             int n = bitness;
             if ((n % 2) != 0) n++;
             int Mn = (int)Math.Pow(M, n);
-            double Disp100 = 0;
-            double Mat100 = 0;
+            double Disp100, Mat100;
             double Summ = 0;
             double Summ2 = 0;
             xN100[0] = Convert.ToInt32(textBox3_3.Text);
-            rN100[0] = xN100[0];//расчет r 0-го;
-            rN100[0] /= Mn;//расчет r 0-го;
+            rN100[0] = (double)xN100[0] / Mn;//расчет r 0-го;
             int[] A = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
 
             for (int i = 1; i < 100; i++)
             { // расчет в цикле
-                xN100[i] = (int)((xN100[i - 1] * xN100[i - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
-                xN100[i] %= Mn;//расчет x i-го;
-                rN100[i] = xN100[i];//расчет r i-го;
-                rN100[i] /= Mn;//расчет r i-го;
+                xN100[i] = (int)((xN100[i - 1] * xN100[i - 1]) / Math.Pow(M, (n / 2))) % Mn;//расчет x i-го;
+                rN100[i] = (double)xN100[i] / Mn;//расчет r i-го;
                 Summ += rN100[i];
                 Summ2 += (rN100[i] * rN100[i]);
                 int switch_on = (int)((rN100[i] * 10) + 1);
@@ -955,22 +1013,22 @@ namespace Grafs
             textBox3_1MX.Text = Convert.ToString(Mat100);
             textBox3_1DX.Text = Convert.ToString(Disp100);
 
-            double Disp1000 = 0;
-            double Mat1000 = 0;
+            #endregion
+
+            #region 1000
+
+            double Disp1000,  Mat1000;
             Summ = 0;
             Summ2 = 0;
-            double[] rN1000 = new double[1020];
-            int[] xN1000 = new int[1020];
+            double[] rN1000 = new double[1000];
+            int[] xN1000 = new int[1000];
             xN1000[0] = Convert.ToInt32(textBox3_3.Text);
-            rN1000[0] = xN1000[0];//расчет r 0-го;
-            rN1000[0] /= Mn;//расчет r 0-го;
+            rN1000[0] = (double)xN1000[0] / Mn;//расчет r 0-го;
             int[] B = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             for (int i = 1; i < 1000; i++)
             { // расчет в цикле
-                xN1000[i] = (int)((xN1000[i - 1] * xN1000[i - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
-                xN1000[i] %= Mn;//расчет x i-го;
-                rN1000[i] = xN1000[i];//расчет r i-го;
-                rN1000[i] /= Mn;//расчет r i-го;
+                xN1000[i] = (int)((xN1000[i - 1] * xN1000[i - 1]) / Math.Pow(M, (n / 2))) % Mn;//расчет x i-го;
+                rN1000[i] = (double)xN1000[i] / Mn;//расчет r i-го;
                 Summ += rN1000[i];
                 Summ2 += (rN1000[i] * rN1000[i]);
                 int switch_on = (int)((rN1000[i] * 10) + 1);
@@ -1018,19 +1076,19 @@ namespace Grafs
             textBox3_2MX.Text = Convert.ToString(Mat1000);
             textBox3_2DX.Text = Convert.ToString(Disp1000);
 
-            double Rg = 0;
-            double MRg = 0;
-            double MRgSumm = 0;
+            #endregion
+
+            #region correlation
+
+            double Rg, MRg, MRgSumm;
 
             for (int i = 0; i < 990; i++)
             {
                 MRgSumm = 0;
                 for (int j = 1; j < (10 + i + g); j++)
                 {
-                    xN1000[j] = (int)((xN1000[j - 1] * xN1000[j - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
-                    xN1000[j] %= Mn;//расчет x i-го;
-                    rN1000[j] = xN1000[j];//расчет r i-го;
-                    rN1000[j] /= Mn;//расчет r i-го;
+                    xN1000[j] = (int)((xN1000[j - 1] * xN1000[j - 1]) / Math.Pow(M, (n / 2))) % Mn;//расчет x i-го;
+                    rN1000[j] = (double)xN1000[j] / Mn;//расчет r i-го;
                 }
                 for (int j = 0; j < (10 + i); j++)
                     MRgSumm += (rN1000[j] * rN1000[j + g]);
@@ -1045,6 +1103,8 @@ namespace Grafs
             for (int i = 0; i < count; i++)
                 s += Convert.ToString(rx[i]) + "\t" + Convert.ToString((int)((rx[i] * 10) + 1)) + "\t";
             textBox3_2_2.Text = s;
+
+            #endregion
         }
 
         #endregion
@@ -1057,12 +1117,12 @@ namespace Grafs
             //подписываем график
             chart1.Series["Series1"].LegendText = "line con";
 
-            b = 0.21131 * M;
+            b = 0.21131 * M1;
 
             for (int i = 1; i < count; i++)
             {
-                rx[i] = (int)((A4 * rx[i - 1] + b) % M);
-                ry[i] = (int)((A4 * ry[i - 1] + b) % M);
+                rx[i] = (int)((A4 * rx[i - 1] + b) % M1);
+                ry[i] = (int)((A4 * ry[i - 1] + b) % M1);
             }
 
             PrintGraf(4);
@@ -1081,14 +1141,14 @@ namespace Grafs
                 if (count < 2)
                     throw new Exception("Количество чисел");
 
-                M = Convert.ToInt64(textBox4_2.Text);
+                M1 = Convert.ToInt64(textBox4_2.Text);
 
-                if (M < 1000)
+                if (M1 < 1000)
                     throw new Exception("Должно быть больше 1000");
 
                 A4 = Convert.ToDouble(textBox4_3.Text);
 
-                if ((A4 <= M / 100 || A4 >= (M - Math.Sqrt(M))) || (A4 % 8) != 5)
+                if ((A4 <= M1 / 100 || A4 >= (M1 - Math.Sqrt(M1))) || (A4 % 8) != 5)
                     throw new Exception("A некоректно");
 
                 rx = new double[count + 1];
@@ -1096,12 +1156,12 @@ namespace Grafs
 
                 rx[0] = Convert.ToDouble(textBox4_4.Text);
 
-                if (rx[0] < 0 || rx[0] > M)
+                if (rx[0] < 0 || rx[0] > M1)
                     throw new Exception("начальное число некоректно");
 
                 ry[0] = Convert.ToDouble(textBox4_6.Text);
 
-                if (ry[0] < 0 || ry[0] > M)
+                if (ry[0] < 0 || ry[0] > M1)
                     throw new Exception("начальное число некоректно");
 
                 textBox4_5.Text = "Введены коректные данные";
@@ -1120,16 +1180,25 @@ namespace Grafs
             chart4_2_1.Series["Series1"].Points.Clear();
             chart4_2_2.Series["Series1"].Points.Clear();
             chart4_2_3.Series["Series1"].Points.Clear();
-            textBox4_T.Text = "Nan";
-            int itn = 0;
-            double axn = rx[itn];
 
-            for (int i = itn + 1; i < rx.Length; i++)
+            #region Period
+
+            textBox4_T.Text = "Nan";
+            double axn;
+            bool flag = false;
+            for (int i = 0; i < rx.Length - 1; i++)
             {
-                if (axn == rx[i])
+                axn = rx[i];
+                for (int j = i + 1; j < rx.Length; j++)
                 {
-                    textBox4_T.Text = (i - itn - 1).ToString();
-                    break;
+                    if (rx[j] == axn)
+                    {
+                        textBox4_T.Text = (j - i - 1).ToString();
+                        flag = true;
+                        break;
+                    }
+                    if (flag)
+                        break;
                 }
             }
 
@@ -1138,32 +1207,30 @@ namespace Grafs
                 textBox4_T.Text = $"{count}";
             }
 
-            int g = 1;
-            double[] rN100 = new double[120];
-            int[] xN100 = new int[120];
-            int M = 10;//основание
+            #endregion
+
+            double[] rN100 = new double[100];
+            long[] xN100 = new long[100];
+            long M = 10;//основание
             int n = bitness;
             if ((n % 2) != 0) n++;
-            int Mn = (int)Math.Pow(M, n);
-            double Disp100 = 0;
-            double Mat100 = 0;
-            double Summ = 0;
-            double Summ2 = 0;
-            xN100[0] = Convert.ToInt32(textBox4_3.Text);
-            rN100[0] = xN100[0];//расчет r 0-го;
-            rN100[0] /= Mn;//расчет r 0-го;
-            int[] A = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            long Mn = (long)Math.Pow(M, n);
+            double Summ = 0, Summ2 = 0;
 
+            #region 100 
+
+            xN100[0] = Convert.ToInt32(textBox4_4.Text); ;//расчет r 0-го;
+            rN100[0] = (double)xN100[0] / M1;
+            long[] A = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            double Disp100, Mat100;
 
             for (int i = 1; i < 100; i++)
-            { // расчет в цикле
-                xN100[i] = (int)((xN100[i - 1] * xN100[i - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
-                xN100[i] %= Mn;//расчет x i-го;
-                rN100[i] = xN100[i];//расчет r i-го;
-                rN100[i] /= Mn;//расчет r i-го;
+            {
+                xN100[i] = (long)((A4 * xN100[i - 1] + b) % M1);
+                rN100[i] = (double)xN100[i] / M1;
                 Summ += rN100[i];
                 Summ2 += (rN100[i] * rN100[i]);
-                int switch_on = (int)((rN100[i] * 10) + 1);
+                long switch_on = (long)((rN100[i] * 10) + 1);
                 switch (switch_on)
                 {
                     case 1:
@@ -1206,28 +1273,31 @@ namespace Grafs
 
             Mat100 = Summ / 100;//box 4
             Disp100 = (Summ2 / 100) - (Mat100 * Mat100);//box 5
+            ///
+            /// математическое ожидание и дисперсия равны 1/2 и 1/12
+            ///
             textBox4_1MX.Text = Convert.ToString(Mat100);
             textBox4_1DX.Text = Convert.ToString(Disp100);
 
-            double Disp1000 = 0;
-            double Mat1000 = 0;
+            #endregion
+
+            #region 1000 
+
+            double Disp1000, Mat1000;
             Summ = 0;
             Summ2 = 0;
-            double[] rN1000 = new double[1020];
-            int[] xN1000 = new int[1020];
-            xN1000[0] = Convert.ToInt32(textBox4_3.Text);
-            rN1000[0] = xN1000[0];//расчет r 0-го;
-            rN1000[0] /= Mn;//расчет r 0-го;
+            double[] rN1000 = new double[1000];
+            long[] xN1000 = new long[1000];
+            xN1000[0] = Convert.ToInt32(textBox4_4.Text);
+            rN1000[0] = xN1000[0] / Mn;//расчет r 0-го;
             int[] B = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             for (int i = 1; i < 1000; i++)
             { // расчет в цикле
-                xN1000[i] = (int)((xN1000[i - 1] * xN1000[i - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
-                xN1000[i] %= Mn;//расчет x i-го;
-                rN1000[i] = xN1000[i];//расчет r i-го;
-                rN1000[i] /= Mn;//расчет r i-го;
+                xN1000[i] = (long)((A4 * xN1000[i - 1] + b) % M1);
+                rN1000[i] = (double)xN1000[i] / M1;
                 Summ += rN1000[i];
                 Summ2 += (rN1000[i] * rN1000[i]);
-                int switch_on = (int)((rN1000[i] * 10) + 1);
+                int switch_on = (int)((rN1000[i]  * 10) + 1);
                 switch (switch_on)
                 {
                     case 1:
@@ -1272,32 +1342,37 @@ namespace Grafs
             textBox4_2MX.Text = Convert.ToString(Mat1000);
             textBox4_2DX.Text = Convert.ToString(Disp1000);
 
-            double Rg = 0;
-            double MRg = 0;
-            double MRgSumm = 0;
+            #endregion
+
+            #region correlation
+
+            double Rg, MRg, MRgSumm;
+            int g = 1;
 
             for (int i = 0; i < 990; i++)
             {
                 MRgSumm = 0;
-                for (int j = 1; j < (10 + i + g); j++)
-                {
-                    xN1000[j] = (int)((xN1000[j - 1] * xN1000[j - 1]) / Math.Pow(M, (n / 2)));//расчет x i-го;
-                    xN1000[j] %= Mn;//расчет x i-го;
-                    rN1000[j] = xN1000[j];//расчет r i-го;
-                    rN1000[j] /= Mn;//расчет r i-го;
-                }
-                for (int j = 0; j < (10 + i); j++)
+                for (int j = 1; j < (10 + i) + g; j++)
+                    xN1000[j] = (long)(A4 * xN1000[j - 1] + b) % M1;
+
+                for (int j = 0; j < (10 + i) + g; j++)
+                    rN1000[j] = (double)xN1000[j] / M1;
+
+                for (int j = 0; j < (10 + i); j++) 
                     MRgSumm += (rN1000[j] * rN1000[j + g]);
+
                 MRg = MRgSumm / (10 + i - g);
                 Rg = 12 * MRg - 3;
                 chart4_2_3.Series["Series1"].Points.AddXY(i, Rg);
 
             }
 
+            #endregion
+
             string s = "";
 
             for (int i = 0; i < count; i++)
-                s += Convert.ToString(rx[i]) + "\t" + Convert.ToString((int)((rx[i] * 10) + 1)) + "\t";
+                s += Convert.ToString(rN100[i]) + "\t- " + Convert.ToString((int)((rN100[i] * 10) + 1)) + "\t\t";
             textBox4_2_2.Text = s;
         }
 
